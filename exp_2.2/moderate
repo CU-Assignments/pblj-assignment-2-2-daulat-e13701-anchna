@@ -1,0 +1,30 @@
+import java.io.*; 
+ class Student implements Serializable{     private static final long serialVersionUID = 1L;     int id;     String name;     double gpa; 
+     public Student(int id, String name, double gpa){         this.id = id;         this.name = name;         this.gpa = gpa; 
+    } 
+    public void display(){ 
+        System.out.println("ID: "+ id +", Name: "+name+", GPA: "+gpa); 
+    } 
+}  public class Experiment5B{ 
+    public static void main(String[] args) { 
+        String filename = "student.ser"; 
+ 
+        Student student = new Student(1114, "Manyata",8.5); 
+ 
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))){             out.writeObject(student);             System.out.println("Student object Serialized successfully!"); 
+        }catch(IOException e){ 
+            System.out.println("Serialization error: "+e.getMessage()); 
+        } 
+ 
+        //Deserialization 
+        try(ObjectInputStream in = new ObjectInputStream(new 
+FileInputStream(filename))){ 
+Student deserializedStudent = (Student) in.readObject();             System.out.println("Deserialized Student details: ");             deserializedStudent.display(); 
+        } catch(FileNotFoundException e){ 
+            System.out.println("File not found: " + e.getMessage()); 
+        } catch(IOException e){ 
+            System.out.println("IO Error: "+ e.getMessage()); 
+        } catch(ClassNotFoundException e){ 
+            System.out.println("Class not found: " +e.getMessage()); 
+        } 
+    } } 
